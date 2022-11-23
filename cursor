@@ -1,0 +1,10 @@
+--cursor
+
+CREATE or replace function platos (lugar_matrix text, id_platos int)return
+bigint
+as
+$$
+select count(total.total_platos)from inventario,Matriz 
+where inventario.total_platos = matriz.id_producto
+$$
+language plpgsql;
