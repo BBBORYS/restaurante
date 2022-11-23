@@ -1,0 +1,7 @@
+--reporte
+select
+sucursales.lugar_sucursales as sucursales 
+count (secretaria.historico_clientes) as secretaria
+from secretarias
+inner join sucursales on sucursales.id_sucursales=secretaria.id_sucursales
+group by sucursales.lugar_sucursal
