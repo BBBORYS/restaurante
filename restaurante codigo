@@ -1,0 +1,378 @@
+/*==============================================================*/
+/* Table: BODEGA                                                */
+/*==============================================================*/
+create table BODEGA (
+   ID_BODEGA            NUMERIC(30)          not null,
+   RESTAURANTE_ID       INT4                 not null,
+   CANTIDADES_DE_ENTRADA CHAR(10)             null,
+   CANTIDAD_DE_SALIDA_  CHAR(10)             null,
+   FECHA_DE_SALIDA      CHAR(10)             null,
+   FECHA_DE_ENTRADA     CHAR(10)             null,
+   constraint PK_BODEGA primary key (ID_BODEGA)
+);
+
+
+/*==============================================================*/
+/* Table: CHEF                                                  */
+/*==============================================================*/
+create table CHEF (
+   ID_CHEF              CHAR(10)             not null,
+   RESTAURANTE_ID       INT4                 not null,
+   NOMBRE_CHEF          TEXT                 not null,
+   APELLIDO_CHEF        TEXT                 not null,
+   CORREO               CHAR(30)             not null,
+   NUMERO_TELEFONO      NUMERIC(10)          not null,
+   constraint PK_CHEF primary key (ID_CHEF)
+);
+
+
+
+/*==============================================================*/
+/* Table: CIUDAD                                                */
+/*==============================================================*/
+create table CIUDAD (
+   CIUDAD_ID            SERIAL               not null,
+   PROVINCIA_ID         INT4                 not null,
+   CIUDAD_NOMBRE        TEXT                 not null,
+   constraint PK_CIUDAD primary key (CIUDAD_ID)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   ID_CLIENTE           NUMERIC(10)          not null,
+   RESTAURANTE_ID       INT4                 not null,
+   NOMBRE_CLIENTE       CHAR(35)             not null,
+   EDAD_CLIENTE         NUMERIC(3)           not null,
+   CANTIDAD_DE_RESERVACIONES NUMERIC              not null,
+   NUMERO_DE_PLATOS     NUMERIC              not null,
+   FECHA_DE_PEDIDO      DATE                 not null,
+   CORREO               CHAR(30)             not null,
+   NUMERO               NUMERIC(10)          not null,
+   constraint PK_CLIENTE primary key (ID_CLIENTE)
+);
+
+
+
+/*==============================================================*/
+/* Table: EMPLEADO                                              */
+/*==============================================================*/
+create table EMPLEADO (
+   ID_EMPLEADO          NUMERIC(10)          not null,
+   RESTAURANTE_ID       INT4                 not null,
+   NOMBRE_EMPLEADO      TEXT                 not null,
+   APELLIDO_EMPLEADO    TEXT                 not null,
+   CORREO_EMPLEADO      VARCHAR(50)          not null,
+   TELEFONO_EMPLEADO    NUMERIC(10)          not null,
+   SEXO_EMPLEADO        CHAR(30)             not null,
+   TIPO_DE_EMPLEADO     VARCHAR(20)          not null,
+   HORARIO_EMPLEADO     TIME                 not null,
+   EDAD_EMPLEADO        NUMERIC(2)           not null,
+   CEDULA_EMPLEADO      TEXT                 not null,
+   INICIO_DE_CONTRATO   DATE                 not null,
+   FIN_DE_CONTRATO      DATE                 not null,
+   constraint PK_EMPLEADO primary key (ID_EMPLEADO)
+);
+
+
+
+/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA (
+   TIPO_FACTURA         INT4                 not null,
+   ID_CLIENTE           NUMERIC(10)          not null,
+   DESCRIPCION_TIPO_FACTURA VARCHAR(255)         null,
+   constraint PK_FACTURA primary key (TIPO_FACTURA)
+);
+
+
+
+/*==============================================================*/
+/* Table: INGREDIENTES                                          */
+/*==============================================================*/
+create table INGREDIENTES (
+   ID_INGREDIENTES      SERIAL               not null,
+   RESTAURANTE_ID       INT4                 not null,
+   ID_CHEF              CHAR(10)             null,
+   ID_BODEGA            NUMERIC(30)          not null,
+   NOMBRE_INGREDIENTE   TEXT                 not null,
+   PRECIO_DE_INGREDIENTE NUMERIC              not null,
+   CANTIDAD             NUMERIC              not null,
+   constraint PK_INGREDIENTES primary key (ID_INGREDIENTES)
+);
+
+
+
+
+
+/*==============================================================*/
+/* Table: MESAS                                                 */
+/*==============================================================*/
+create table MESAS (
+   ID_MESA              SERIAL               not null,
+   ID_CHEF              CHAR(10)             not null,
+   RESTAURANTE_ID       INT4                 not null,
+   constraint PK_MESAS primary key (ID_MESA)
+);
+
+
+
+/*==============================================================*/
+/* Table: PAIS                                                  */
+/*==============================================================*/
+create table PAIS (
+   PAIS_ID              SERIAL               not null,
+   PAIS_NOMBRE          TEXT                 not null,
+   constraint PK_PAIS primary key (PAIS_ID)
+);
+
+
+
+/*==============================================================*/
+/* Table: PAQUETES                                              */
+/*==============================================================*/
+create table PAQUETES (
+   PAQUETE_ID           SERIAL               not null,
+   ID_CLIENTE           NUMERIC(10)          not null,
+   TIPO_DE_PAQUETE      VARCHAR(20)          not null,
+   FECHA_DE_INICIO      DATE                 not null,
+   FECHA_DE_FIN         DATE                 not null,
+   constraint PK_PAQUETES primary key (PAQUETE_ID)
+);
+
+
+/*==============================================================*/
+/* Table: PLATOS                                                */
+/*==============================================================*/
+create table PLATOS (
+   ID_PLATO             NUMERIC(10)          not null,
+   ID_CHEF              CHAR(10)             null,
+   RESTAURANTE_ID       INT4                 not null,
+   FECHA_DE_COMPRA      DATE                 not null,
+   constraint PK_PLATOS primary key (ID_PLATO)
+);
+
+
+/*==============================================================*/
+/* Table: PROVINCIA                                             */
+/*==============================================================*/
+create table PROVINCIA (
+   PROVINCIA_ID         SERIAL               not null,
+   PAIS_ID              INT4                 not null,
+   PROVINCIA_NOMBRE     TEXT                 not null,
+   constraint PK_PROVINCIA primary key (PROVINCIA_ID)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: RELATIONSHIP_4                                        */
+/*==============================================================*/
+create table RELATIONSHIP_4 (
+   ID_MESA              INT4                 not null,
+   ID_EMPLEADO          NUMERIC(10)          not null,
+   constraint PK_RELATIONSHIP_4 primary key (ID_MESA, ID_EMPLEADO)
+);
+
+
+
+/*==============================================================*/
+/* Table: RESERVACIONES                                         */
+/*==============================================================*/
+create table RESERVACIONES (
+   ID_RESERVACION       NUMERIC              not null,
+   APELLIDO             TEXT                 not null,
+   CEDULA               NUMERIC(10)          not null,
+   FECHA_DE_RESERVACION DATE                 not null,
+   NOMBRE               CHAR(20)             not null,
+   constraint PK_RESERVACIONES primary key (ID_RESERVACION, APELLIDO, CEDULA, FECHA_DE_RESERVACION, NOMBRE)
+);
+
+
+/*==============================================================*/
+/* Table: RESTAURANTE                                           */
+/*==============================================================*/
+create table RESTAURANTE (
+   RESTAURANTE_ID       SERIAL               not null,
+   CIUDAD_ID            INT4                 not null,
+   RESTAURANTE_DIRECCION TEXT                 not null,
+   RESTAURANTE_TELEFONO NUMERIC              not null,
+   RESTAURANTE_NOMBRE   TEXT                 not null,
+   constraint PK_RESTAURANTE primary key (RESTAURANTE_ID)
+);
+
+
+
+alter table BODEGA
+   add constraint FK_BODEGA_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table CHEF
+   add constraint FK_CHEF_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table CIUDAD
+   add constraint FK_CIUDAD_RELATIONS_PROVINCI foreign key (PROVINCIA_ID)
+      references PROVINCIA (PROVINCIA_ID)
+      on delete restrict on update restrict;
+
+alter table CLIENTE
+   add constraint FK_CLIENTE_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table EMPLEADO
+   add constraint FK_EMPLEADO_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table FACTURA
+   add constraint FK_FACTURA_RELATIONS_CLIENTE foreign key (ID_CLIENTE)
+      references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict;
+
+alter table INGREDIENTES
+   add constraint FK_INGREDIE_RELATIONS_BODEGA foreign key (ID_BODEGA)
+      references BODEGA (ID_BODEGA)
+      on delete restrict on update restrict;
+
+alter table INGREDIENTES
+   add constraint FK_INGREDIE_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table INGREDIENTES
+   add constraint FK_INGREDIE_RELATIONS_CHEF foreign key (ID_CHEF)
+      references CHEF (ID_CHEF)
+      on delete restrict on update restrict;
+
+alter table MESAS
+   add constraint FK_MESAS_RELATIONS_CHEF foreign key (ID_CHEF)
+      references CHEF (ID_CHEF)
+      on delete restrict on update restrict;
+
+alter table MESAS
+   add constraint FK_MESAS_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table PAQUETES
+   add constraint FK_PAQUETES_RELATIONS_CLIENTE foreign key (ID_CLIENTE)
+      references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict;
+
+alter table PLATOS
+   add constraint FK_PLATOS_RELATIONS_RESTAURA foreign key (RESTAURANTE_ID)
+      references RESTAURANTE (RESTAURANTE_ID)
+      on delete restrict on update restrict;
+
+alter table PLATOS
+   add constraint FK_PLATOS_RELATIONS_CHEF foreign key (ID_CHEF)
+      references CHEF (ID_CHEF)
+      on delete restrict on update restrict;
+
+alter table PROVINCIA
+   add constraint FK_PROVINCI_RELATIONS_PAIS foreign key (PAIS_ID)
+      references PAIS (PAIS_ID)
+      on delete restrict on update restrict;
+
+alter table RELATIONSHIP_4
+   add constraint FK_RELATION_RELATIONS_MESAS foreign key (ID_MESA)
+      references MESAS (ID_MESA)
+      on delete restrict on update restrict;
+
+alter table RELATIONSHIP_4
+   add constraint FK_RELATION_RELATIONS_EMPLEADO foreign key (ID_EMPLEADO)
+      references EMPLEADO (ID_EMPLEADO)
+      on delete restrict on update restrict;
+
+alter table RESERVACIONES
+   add constraint FK_RESERVAC_RELATIONS_CLIENTE foreign key (ID_RESERVACION)
+      references CLIENTE (ID_CLIENTE)
+      on delete restrict on update restrict;
+
+alter table RESTAURANTE
+   add constraint FK_RESTAURA_RELATIONS_CIUDAD foreign key (CIUDAD_ID)
+      references CIUDAD (CIUDAD_ID)
+      on delete restrict on update restrict;
+
+insert into pais values(1, 'Ecuador');
+insert into pais values(2, 'Brasil');
+insert into provincia values(1, 1, 'Manabi');
+insert into ciudad values(1, 1, 'Manta');
+insert into ciudad values(2, 1, 'Montecristi');
+insert into ciudad values(3, 1, 'Rocafuerte');
+insert into ciudad values(4, 1, 'Chone');
+
+
+insert into restaurante values(1,1,'Calle 13',098765438,'Matriz');
+insert into restaurante values(2,1,'Sta Martha',098765439,'Sucursal1');
+insert into restaurante values(3,2,'Cerro',098765440,'Sucursal3');
+insert into restaurante values(4,3,'Pueblo arrecho',098765441,'Sucursal4');
+insert into restaurante values(5,1,'Costa azul',098765442,'Sucursal2');
+insert into restaurante values(6,4,'Via al terminal',098765443,'Sucursal5');
+
+
+insert into empleado values(1,1,'Boris Hernan','Vera Ponce', 'bori2@gmail.com',0956712323,'Masculino',
+						   'Mesero','08:00:00',23,'1340863344','2019-07-07','2020-07-07');
+insert into empleado values(2,4,'Ernesto','Rosado', 'erne@gmail.com',0956712324,'Masculino',
+						   'Mesero','08:00:00',23,'1340863344','2020-07-07','2020-12-07');
+insert into empleado values(3,2,'Xavier','Arroyo', 'xavimail.com',0956712325,'Masculino',
+						   'Mesero','08:00:00',23,'1340863344','2020-12-07','2021-05-10');
+insert into empleado values(4,3,'Alexandra','Pihuave', 'ale7@gmail.com',0956712326,'Femenino',
+						   'Mesero','08:00:00',23,'1340863344','2021-05-10','2021-12-24');
+insert into empleado values(5,5,'Diego','Ponce', 'dpon@gmail.com',0956712327,'Masculino',
+						   'Mesero','08:00:00',23,'1340863344','2021-12-24','2022-11-03');	
+insert into empleado values(6,5,'Marian','Vasquez', 'igna@gmail.com',0956712331,'Femenino',
+						   'Mesero','08:00:00',23,'1340863344','2022-11-03','2023-11-03');	
+insert into empleado values(7,5,'Karina','Cedeño', 'dpon@gmail.com',0956712327,'Femenino',
+						   'Mesero','08:00:00',23,'1340863344','2022-11-07','2023-11-07');								   
+
+
+--CONSULTAS
+
+
+--Mostrat todos los restaurantes de la ciudad Manta. Se pide el nombre del restaurante, 
+--la ubicacion, y la ciudad.
+select r.restaurante_nombre, r.restaurante_direccion as ubicacion, ci.ciudad_nombre
+from restaurante r inner join ciudad
+ci on ci.ciudad_id = r.ciudad_id
+where ci.ciudad_nombre = 'Manta';
+
+
+--Mostrar cuantos restaurantes hay por cada ciudad. Se pide mostrar los campos: 
+--nombre de la ciudad donde este queda junto con el nombre del restaurante sea este matriz o
+--sucursal y el numero por cada ciudad donde se encuentre.
+select count(ci.ciudad_id) as restaurantes,
+ ci.ciudad_nombre, r.restaurante_nombre
+from restaurante r inner join ciudad
+ci on ci.ciudad_id = r.ciudad_id
+group by ci.ciudad_nombre, r.restaurante_nombre;
+
+
+
+--Mostrar todos los empleados que tuvieron finalidad de contrato en el año 2020. Se pide moestrar los nombres, 
+--la cedula y la fecha en que termino su contrato.
+select e.nombre_empleado, r.restaurante_nombre as restaurante_trabajó,
+e.cedula_empleado as cedula,
+e.fin_de_contrato as terminacion_contrato
+from empleado e inner join restaurante r
+on r.restaurante_id = e.restaurante_id
+where extract(year FROM e.fin_de_contrato) = '2020';
+
+
+--Mostrar todos los empleados que laboren o hayan laborado en el restaurante sucursal2. se pide moestrar
+-- el nombre del empleado, su cedula, la ciudad del restaurante y el nombre del mismo.
+select e.nombre_empleado, e.cedula_empleado, ci.ciudad_nombre as ciudad, r.restaurante_nombre
+from empleado e inner join restaurante r
+on r.restaurante_id = e.restaurante_id
+inner join ciudad ci on ci.ciudad_id = r.ciudad_id
+where r.restaurante_nombre = 'Sucursal2';
